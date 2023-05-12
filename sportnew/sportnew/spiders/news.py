@@ -1,6 +1,7 @@
 import time
 import scrapy
 from httpcore import TimeoutException
+# 这里报错不用管
 from sportnew.items import News
 import unicodedata as ucd
 from selenium import webdriver
@@ -143,11 +144,11 @@ class NewsSpider(scrapy.Spider):
                 continue
             else:
                 content_mlist.append(m_content)
-        title = response.meta['title']
-        url = response.meta['url']
-        Topic = response.meta['Topic']
-        news = News(Topic=Topic, title=title, content=content_mlist, url=url)
-        yield news
+                title = response.meta['title']
+                url = response.meta['url']
+                Topic = response.meta['Topic']
+                news = News(Topic=Topic, title=title, content=content_mlist, url=url)
+                yield news
 
     def parse_four(self, response):
 
