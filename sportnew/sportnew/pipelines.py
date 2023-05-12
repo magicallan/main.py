@@ -20,7 +20,6 @@ class SportnewPipeline:
         self.json_file.write('[\n')
 
     def process_item(self, item, spider):
-        print("爬虫进行中")
         item_jason = json.dumps(dict(item), ensure_ascii=False)
         self.json_file.write('\t' + item_jason + ',\n')
         return item
