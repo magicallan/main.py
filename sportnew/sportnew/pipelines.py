@@ -12,8 +12,10 @@ import json
 class SportnewPipeline:
 
     def __init__(self):
-        self.json_file = codecs.open('news.json', 'w', encoding='UTF-8')
+        self.json_file = None
+
     def open_spider(self, spider):
+        self.json_file = codecs.open('news.json', 'w', encoding='UTF-8')
         print("爬虫开始")
         self.json_file.write('[\n')
 

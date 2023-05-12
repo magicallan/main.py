@@ -45,7 +45,7 @@ class NewsSpider(scrapy.Spider):
             print(f"正在抓取{Topic}新闻")
             page_list = response.xpath("//li[@class='item']/p/a")
             for page in page_list:
-                title = page.xpath("./text()").extract()
+                title = page.xpath("./text()").extract_first()
                 url = page.xpath("./@href").extract_first()
                 yield scrapy.Request(url=url, callback=self.parse_third, meta={'title': title, 'url': url,
                                                                                'Topic': Topic})
@@ -78,6 +78,7 @@ class NewsSpider(scrapy.Spider):
                     break
             for page in page_list:
                 title = page.text
+                print(title)
                 url = page.get_attribute('href')
                 # 处理抓取到的链接
                 get_browser = Edge(options=self.edge_options)
@@ -144,11 +145,11 @@ class NewsSpider(scrapy.Spider):
                 continue
             else:
                 content_mlist.append(m_content)
-                title = response.meta['title']
-                url = response.meta['url']
-                Topic = response.meta['Topic']
-                news = News(Topic=Topic, title=title, content=content_mlist, url=url)
-                yield news
+        title = response.meta['title']
+        url = response.meta['url']
+        Topic = response.meta['Topic']
+        news = News(Topic=Topic, title=title, content=content_mlist, url=url)
+        yield news
 
     def parse_four(self, response):
 
